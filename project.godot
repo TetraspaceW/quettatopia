@@ -11,6 +11,7 @@ config_version=4
 [application]
 
 config/name="Tetratopia"
+run/main_scene="res://Map.tscn"
 config/icon="res://icon.png"
 
 [physics]
@@ -19,4 +20,5 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
+environment/default_clear_color=Color( 0.45, 0.75, 0.9, 1 )
 environment/default_environment="res://default_env.tres"
