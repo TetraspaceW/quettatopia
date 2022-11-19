@@ -1,6 +1,6 @@
 # Quettatopia
 
-!(image)[https://i.imgur.com/SSuZ5w4.png]
+![image](https://i.imgur.com/SSuZ5w4.png)
 
 Polytopia-like civ game where the scale expands as you advance, from villages to nations to planets, with the full world map of the previous era becoming the city map of the next.
 
