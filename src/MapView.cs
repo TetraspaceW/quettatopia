@@ -7,36 +7,56 @@ public class MapView : Node2D
     // Declare member variables here. Examples:
     // private int a = 2;
     // private string b = "text";
-    TileMap tileMap;
+    TileMap terrainTileMap;
+    TileMap unitsTileMap;
     MapModel currentMap;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        tileMap = (TileMap)GetNode("./TileMap");
-        tileMap.TileSet = GetTilesetWithImages("/terrain");
+        terrainTileMap = CreateTileset("/terrain");
+        unitsTileMap = CreateTileset("/units");
 
         currentMap = new MapModel();
 
         RenderMap();
     }
 
+    TileMap CreateTileset(string folder)
+    {
+        TileMap tileMap = new TileMap();
+        tileMap.TileSet = GetTilesetWithImages(folder);
+        AddChild(tileMap);
+        return tileMap;
+    }
+
+    void StartNextTurn()
+    {
+        currentMap.UpdateTurn();
+    }
+
     void RenderMap()
     {
-        for (int x = 0; x < 10; x++)
+        for (int x = 0; x < currentMap.terrain.GetLength(0); x++)
         {
-            for (int y = 0; y < 10; y++)
+            for (int y = 0; y < currentMap.terrain.GetLength(1); y++)
             {
-                tileMap.SetCell(x, y, tileMap.TileSet.FindTileByName("terrain/" + currentMap.terrain[x, y].terrain));
+                terrainTileMap.SetCell(x, y, terrainTileMap.TileSet.FindTileByName("terrain/" + currentMap.terrain[x, y].terrain));
             }
         }
 
-        SetMapLocation(10, 10);
+        foreach (var unit in currentMap.units)
+        {
+            unitsTileMap.SetCell(unit.Key.Item1, unit.Key.Item2, unitsTileMap.TileSet.FindTileByName("units/" + unit.Value.GetImage()));
+        }
+
+        SetMapLocation(terrainTileMap, 9, 9);
+        SetMapLocation(unitsTileMap, 9, 9);
     }
 
-    void SetMapLocation(int width, int height)
+    void SetMapLocation(TileMap tilemap, int width, int height)
     {
-        tileMap.Position = new Vector2(
+        tilemap.Position = new Vector2(
             (GetViewportRect().Size.x - width * 64) / 2,
             (GetViewportRect().Size.y - width * 64) / 2
         );

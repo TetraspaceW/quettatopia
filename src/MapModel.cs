@@ -2,14 +2,14 @@ using System.Collections.Generic;
 
 class MapModel
 {
-    public TerrainTile[,] terrain = new TerrainTile[10, 10];
-    List<Unit> units;
+    public TerrainTile[,] terrain = new TerrainTile[9, 9];
+    public Dictionary<(int, int), Unit> units = new Dictionary<(int, int), Unit>();
 
     public MapModel()
     {
-        for (int x = 0; x < 10; x++)
+        for (int x = 0; x < 9; x++)
         {
-            for (int y = 0; y < 10; y++)
+            for (int y = 0; y < 9; y++)
             {
                 var d = RND.d(8);
                 if (d <= 2) { terrain[x, y] = new TerrainTile("forest"); }
@@ -17,6 +17,13 @@ class MapModel
                 else { terrain[x, y] = new TerrainTile("plains"); }
             }
         }
+
+        units.Add((4, 4), new Unit(new UnitType(movement: 1, attack: (1, 2), health: 8, image: "group")));
+    }
+
+    public void UpdateTurn()
+    {
+
     }
 }
 
@@ -24,8 +31,33 @@ class TerrainTile
 {
     public string terrain;
 
-
     public TerrainTile(string terrain) { this.terrain = terrain; }
 }
 
-class Unit { }
+class Unit
+{
+    uint owner;
+    UnitType type;
+
+    public Unit(UnitType type)
+    {
+        owner = 0;
+        this.type = type;
+    }
+
+    public string GetImage()
+    {
+        return type.image;
+    }
+}
+
+class UnitType
+{
+    int movement;
+    (int, int) attack;
+    int health;
+
+    public string image;
+
+    public UnitType(int movement, (int, int) attack, int health, string image) { this.movement = movement; this.attack = attack; this.health = health; this.image = image; }
+}
