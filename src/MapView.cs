@@ -16,19 +16,18 @@ public class MapView : Node2D
         tileMap = (TileMap)GetNode("./TileMap");
         tileMap.TileSet = GetTilesetWithImages("/terrain");
 
+        currentMap = new MapModel();
+
+        RenderMap();
+    }
+
+    void RenderMap()
+    {
         for (int x = 0; x < 10; x++)
         {
             for (int y = 0; y < 10; y++)
             {
-                if (RND.d(4) == 1)
-                {
-                    tileMap.SetCell(x, y, tileMap.TileSet.FindTileByName("terrain/plains"));
-                }
-                else
-                {
-                    tileMap.SetCell(x, y, tileMap.TileSet.FindTileByName("terrain/forest"));
-                }
-
+                tileMap.SetCell(x, y, tileMap.TileSet.FindTileByName("terrain/" + currentMap.terrain[x, y].terrain));
             }
         }
 
