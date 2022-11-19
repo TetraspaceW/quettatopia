@@ -12,18 +12,9 @@ class MapModel
             for (int y = 0; y < 10; y++)
             {
                 var d = RND.d(8);
-                if (d >= 1 && d <= 2)
-                {
-                    terrain[x, y] = new TerrainTile("forest");
-                }
-                else if (d == 3)
-                {
-                    terrain[x, y] = new TerrainTile("mountains");
-                }
-                else
-                {
-                    terrain[x, y] = new TerrainTile("plains");
-                }
+                if (d <= 2) { terrain[x, y] = new TerrainTile("forest"); }
+                else if (d == 3) { terrain[x, y] = new TerrainTile("mountains"); }
+                else { terrain[x, y] = new TerrainTile("plains"); }
             }
         }
     }
