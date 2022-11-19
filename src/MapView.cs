@@ -8,6 +8,7 @@ public class MapView : Node2D
     // private int a = 2;
     // private string b = "text";
     TileMap tileMap;
+    MapModel currentMap;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -19,7 +20,15 @@ public class MapView : Node2D
         {
             for (int y = 0; y < 10; y++)
             {
-                tileMap.SetCell(x, y, tileMap.TileSet.FindTileByName("terrain/plains"));
+                if (RND.d(4) == 1)
+                {
+                    tileMap.SetCell(x, y, tileMap.TileSet.FindTileByName("terrain/plains"));
+                }
+                else
+                {
+                    tileMap.SetCell(x, y, tileMap.TileSet.FindTileByName("terrain/forest"));
+                }
+
             }
         }
 
