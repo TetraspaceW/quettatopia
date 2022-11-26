@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System;
 
 class MapModel
 {
@@ -24,6 +25,21 @@ class MapModel
     public void UpdateTurn()
     {
 
+    }
+
+    List<(int, int)> CalculateValidMoves((int, int) position, int movement)
+    {
+        var validMoves = new List<(int, int)>();
+        var (unitX, unitY) = position;
+
+        for (int x = unitX; x <= Math.Max(unitX + movement, 8); x++)
+        {
+            for (int y = unitY; y <= Math.Max(unitY + movement, 8); y++)
+            {
+                if (position != (x, y)) { validMoves.Add((x, y)); }
+            }
+        }
+        return validMoves;
     }
 }
 

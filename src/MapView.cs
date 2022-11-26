@@ -7,6 +7,7 @@ public class MapView : Node2D
     // Declare member variables here. Examples:
     // private int a = 2;
     // private string b = "text";
+    TileMapArea tileMapArea;
     TileMap terrainTileMap;
     TileMap unitsTileMap;
     MapModel currentMap;
@@ -14,19 +15,21 @@ public class MapView : Node2D
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        terrainTileMap = CreateTileset("/terrain");
-        unitsTileMap = CreateTileset("/units");
+        tileMapArea = GetNode<TileMapArea>("TileMapArea");
+
+        terrainTileMap = CreateTilemap("/terrain");
+        unitsTileMap = CreateTilemap("/units");
 
         currentMap = new MapModel();
 
         RenderMap();
     }
 
-    TileMap CreateTileset(string folder)
+    TileMap CreateTilemap(string tilesetFolder)
     {
         TileMap tileMap = new TileMap();
-        tileMap.TileSet = GetTilesetWithImages(folder);
-        AddChild(tileMap);
+        tileMap.TileSet = GetTilesetWithImages(tilesetFolder);
+        tileMapArea.AddChild(tileMap);
         return tileMap;
     }
 
@@ -50,13 +53,12 @@ public class MapView : Node2D
             unitsTileMap.SetCell(unit.Key.Item1, unit.Key.Item2, unitsTileMap.TileSet.FindTileByName("units/" + unit.Value.GetImage()));
         }
 
-        SetMapLocation(terrainTileMap, 9, 9);
-        SetMapLocation(unitsTileMap, 9, 9);
+        SetTileMapPosition(9, 9);
     }
 
-    void SetMapLocation(TileMap tilemap, int width, int height)
+    void SetTileMapPosition(int width, int height)
     {
-        tilemap.Position = new Vector2(
+        tileMapArea.Position = new Vector2(
             (GetViewportRect().Size.x - width * 64) / 2,
             (GetViewportRect().Size.y - width * 64) / 2
         );
@@ -101,10 +103,4 @@ public class MapView : Node2D
         }
         return filesInFolder;
     }
-
-    //  // Called every frame. 'delta' is the elapsed time since the previous frame.
-    //  public override void _Process(float delta)
-    //  {
-    //      
-    //  }
 }
