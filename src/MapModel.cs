@@ -3,14 +3,17 @@ using System;
 
 class MapModel
 {
-    public TerrainTile[,] terrain = new TerrainTile[9, 9];
+    static int width = 9;
+    static int height = 9;
+
+    public TerrainTile[,] terrain = new TerrainTile[width, height];
     public Dictionary<(int, int), Unit> units = new Dictionary<(int, int), Unit>();
 
     public MapModel()
     {
-        for (int x = 0; x < 9; x++)
+        for (int x = 0; x < width; x++)
         {
-            for (int y = 0; y < 9; y++)
+            for (int y = 0; y < height; y++)
             {
                 var d = RND.d(8);
                 if (d <= 2) { terrain[x, y] = new TerrainTile("forest"); }
