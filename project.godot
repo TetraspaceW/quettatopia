@@ -10,7 +10,7 @@ config_version=4
 
 [application]
 
-config/name="Tetratopia"
+config/name="Quettatopia"
 run/main_scene="res://src/Map.tscn"
 config/icon="res://icon.png"
 
@@ -18,6 +18,10 @@ config/icon="res://icon.png"
 
 window/size/width=1280
 window/size/height=720
+
+[mono]
+
+project/assembly_name="Tetratopia"
 
 [physics]
 
